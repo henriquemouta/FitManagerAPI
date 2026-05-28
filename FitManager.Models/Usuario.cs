@@ -1,5 +1,4 @@
-﻿using FitManager.Models.FitManager.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitManager.Models
