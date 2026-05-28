@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37216.2 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitManagerAPI", "FitManagerAPI\FitManagerAPI.csproj", "{02E5CE91-CB81-47F0-901C-5A6553990718}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apoio", "Apoio", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitManager.Business", "FitManager.Business\FitManager.Business.csproj", "{BA556CDA-BE45-4D6D-8D35-0F643C7C8A20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitManager.Models", "FitManager.Models\FitManager.Models.csproj", "{6324D333-87FE-47ED-B952-323C8CD74F53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitManager.Repositories", "FitManager.Repositories\FitManager.Repositories.csproj", "{AF547ADE-D2BE-4F4A-BBA7-7567BA5280CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitManager.ViewModels", "FitManager.ViewModels\FitManager.ViewModels.csproj", "{3B5432C7-0A37-4A6C-B40D-94E0EBA2370F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{02E5CE91-CB81-47F0-901C-5A6553990718}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02E5CE91-CB81-47F0-901C-5A6553990718}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02E5CE91-CB81-47F0-901C-5A6553990718}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02E5CE91-CB81-47F0-901C-5A6553990718}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA556CDA-BE45-4D6D-8D35-0F643C7C8A20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA556CDA-BE45-4D6D-8D35-0F643C7C8A20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA556CDA-BE45-4D6D-8D35-0F643C7C8A20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA556CDA-BE45-4D6D-8D35-0F643C7C8A20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6324D333-87FE-47ED-B952-323C8CD74F53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6324D333-87FE-47ED-B952-323C8CD74F53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6324D333-87FE-47ED-B952-323C8CD74F53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6324D333-87FE-47ED-B952-323C8CD74F53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF547ADE-D2BE-4F4A-BBA7-7567BA5280CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF547ADE-D2BE-4F4A-BBA7-7567BA5280CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF547ADE-D2BE-4F4A-BBA7-7567BA5280CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF547ADE-D2BE-4F4A-BBA7-7567BA5280CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B5432C7-0A37-4A6C-B40D-94E0EBA2370F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B5432C7-0A37-4A6C-B40D-94E0EBA2370F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B5432C7-0A37-4A6C-B40D-94E0EBA2370F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B5432C7-0A37-4A6C-B40D-94E0EBA2370F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BA556CDA-BE45-4D6D-8D35-0F643C7C8A20} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{6324D333-87FE-47ED-B952-323C8CD74F53} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{AF547ADE-D2BE-4F4A-BBA7-7567BA5280CA} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{3B5432C7-0A37-4A6C-B40D-94E0EBA2370F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6C01D7FA-8B18-4A7D-9EDB-BD2356DB3024}
+	EndGlobalSection
+EndGlobal
