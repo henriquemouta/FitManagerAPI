@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FitManager.Repositories\FitManager.Repositories.csproj" />
+    <ProjectReference Include="..\FitManager.ViewModels\FitManager.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

@@ -19,6 +19,9 @@ namespace FitManager.Models
         [Column("senha")]
         public string senha { get; set; } = string.Empty;
 
+        [Column("telefone")]
+        public string? telefone { get; set; }
+
         [Column("data_nascimento")]
         public DateOnly dataNascimento { get; set; }
 
