@@ -1,5 +1,4 @@
-﻿using FitManager.Models.FitManager.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitManager.Models
@@ -19,6 +18,9 @@ namespace FitManager.Models
 
         [Column("senha")]
         public string senha { get; set; } = string.Empty;
+
+        [Column("telefone")]
+        public string? telefone { get; set; }
 
         [Column("data_nascimento")]
         public DateOnly dataNascimento { get; set; }
