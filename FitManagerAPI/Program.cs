@@ -29,6 +29,21 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+// Após builder.Build()
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    try
+    {
+        await db.Database.CanConnectAsync();
+        Console.WriteLine("? Banco conectado com sucesso!");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"? Erro ao conectar: {ex.Message}");
+    }
+}
+
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
