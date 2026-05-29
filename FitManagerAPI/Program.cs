@@ -8,10 +8,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Repositórios
-
+builder.Services.AddScoped<RepositorioUsuario>();
 
 // Negócios
-
+builder.Services.AddScoped<NegocioUsuario>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
