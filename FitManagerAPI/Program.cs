@@ -36,7 +36,6 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// Ap�s builder.Build()
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
