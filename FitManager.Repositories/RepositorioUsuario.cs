@@ -44,5 +44,11 @@ namespace FitManager.Repositories
 
             return await query.CountAsync();
         }
+
+        public async Task<Usuario?> getByCargoAndIdAsync(int id, int idCargo)
+        
+            => await banco
+                .Include(u => u.cargo)
+                .FirstOrDefaultAsync(u => u.idUsuario == id && u.idCargo == idCargo);
     }
 }
