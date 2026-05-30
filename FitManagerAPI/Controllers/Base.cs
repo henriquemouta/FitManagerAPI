@@ -1,7 +1,7 @@
 ﻿using FitManager.Business;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FITManagerAPI.Controllers
+namespace FitManagerAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -22,7 +22,7 @@ namespace FITManagerAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public virtual async Task<IActionResult> GetById(string id)
+        public virtual async Task<IActionResult> getById(int id)
         {
             var item = await negocio.getByIdAsync(id);
             if (item == null) return NotFound();
@@ -30,24 +30,24 @@ namespace FITManagerAPI.Controllers
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Add([FromBody] T entity)
+        public virtual async Task<IActionResult> add([FromBody] T entity)
         {
             await negocio.addAsync(entity);
             return Ok();
         }
+
         [HttpPut("{id}")]
-        public virtual async Task<IActionResult> Update(string id, [FromBody] T entity)
+        public virtual async Task<IActionResult> update(int id, [FromBody] T entity)
         {
             await negocio.updateAsync(id, entity);
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        public virtual async Task<IActionResult> Delete(string id)
+        public virtual async Task<IActionResult> delete(int id)
         {
             await negocio.deleteAsync(id);
             return Ok();
         }
     }
-
 }
