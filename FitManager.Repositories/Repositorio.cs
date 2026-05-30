@@ -7,6 +7,7 @@ namespace FitManager.Repositories
     {
         protected readonly AppDbContext _context;
         protected readonly DbSet<T> banco;
+        public AppDbContext getContext() => _context;
 
         protected BaseRepositorio(AppDbContext context)
         {

@@ -34,6 +34,8 @@ namespace FitManager.Models
         [ForeignKey("IdInstrutor")]
         public Usuario? instrutor { get; set; }
 
+        public ICollection<UsuarioTreino> usuarioTreinos { get; set; } = new List<UsuarioTreino>();
+
         public ICollection<SessaoTreino> sessoes { get; set; } = new List<SessaoTreino>();
     }
 }
