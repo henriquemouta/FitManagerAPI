@@ -14,10 +14,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         )
     ));
 
-// Repositórios
+// Repositï¿½rios
 builder.Services.AddScoped<RepositorioUsuario>();
 
-// Negócios
+// Negï¿½cios
 builder.Services.AddScoped<NegocioUsuario>();
 
 builder.Services.AddControllers();

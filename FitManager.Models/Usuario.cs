@@ -34,6 +34,9 @@ namespace FitManager.Models
         [Column("create_at")]
         public DateTime createAt { get; set; } = DateTime.UtcNow;
 
+        [Column("update_at")]
+        public DateTime? updateAt { get; set; }
+
         [Column("id_cargo")]
         public int idCargo { get; set; }
 
