@@ -33,7 +33,16 @@ namespace FitManager.Repositories
                 .ToListAsync();
         }
 
-        public async Task<int> countByCargoAsync(int idCargo)
-            => await banco.CountAsync(u => u.idCargo == idCargo);
+        public async Task<int> countByCargoAsync(int idCargo, string? search) 
+        {
+            var query = banco.Where(u => u.idCargo == idCargo);
+
+            if (!string.IsNullOrEmpty(search))
+                query = query.Where(u =>
+                    u.nomeCompleto.Contains(search) ||
+                    u.matricula.Contains(search));
+
+            return await query.CountAsync();
+        }
     }
 }
