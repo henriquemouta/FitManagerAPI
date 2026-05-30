@@ -7,6 +7,7 @@ namespace FitManager.Repositories
     {
         public RepositorioUsuario(AppDbContext context) : base(context) { }
 
+
         public async Task<bool> existeCpfAsync(string cpf)
             => await banco.AnyAsync(u => u.cpf == cpf);
 
