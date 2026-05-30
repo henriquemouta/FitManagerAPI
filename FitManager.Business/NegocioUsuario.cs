@@ -55,7 +55,7 @@ namespace FitManager.Business
 
             usuario.updateAt = DateTime.UtcNow;
 
-            await repositorio.updateAsync(id.ToString(), usuario);
+            await repositorio.updateAsync(id, usuario);
         }
 
         public async Task<ListagemResponseVM<UsuarioResponseVM>> listarPorCargoAsync(
