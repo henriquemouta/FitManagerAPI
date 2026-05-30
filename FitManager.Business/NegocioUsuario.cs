@@ -7,7 +7,7 @@ namespace FitManager.Business
 {
     public class NegocioUsuario : Negocio<Usuario>
     {
-        private readonly RepositorioUsuario repositorio  ;
+        private readonly RepositorioUsuario repositorio;
 
         public NegocioUsuario(RepositorioUsuario repositorio) : base(repositorio)
         {
@@ -62,7 +62,7 @@ namespace FitManager.Business
             int idCargo, string? search, int page, int limit)
         {
             var items = await repositorio.getByCargoAsync(idCargo, search, page, limit);
-            var total = await repositorio.countByCargoAsync(idCargo);
+            var total = await repositorio.countByCargoAsync(idCargo, search);
 
             return new ListagemResponseVM<UsuarioResponseVM>
             {
@@ -73,7 +73,7 @@ namespace FitManager.Business
         }
 
         public async Task<int> contarPorCargoAsync(int idCargo)
-            => await repositorio.countByCargoAsync(idCargo);
+            => await repositorio.countByCargoAsync(idCargo, null);
 
         public async Task<List<UsuarioResponseVM>> listarRecentesAsync(int idCargo, int limit)
         {
