@@ -14,11 +14,17 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         )
     ));
 
-// Reposit�rios
+// Repositórios
 builder.Services.AddScoped<RepositorioUsuario>();
+builder.Services.AddScoped<RepositorioTreino>();
+builder.Services.AddScoped<RepositorioSessao>();
+builder.Services.AddScoped<RepositorioExercicio>();
 
-// Neg�cios
+// Negócios
 builder.Services.AddScoped<NegocioUsuario>();
+builder.Services.AddScoped<NegocioTreino>();
+builder.Services.AddScoped<NegocioSessao>();
+builder.Services.AddScoped<NegocioExercicio>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
