@@ -62,7 +62,7 @@ namespace FitManagerAPI.Controllers
         {
             try
             {
-                await negocio.deleteAsync(id.ToString());
+                await negocio.deleteAsync(id);
                 return Ok(new { message = "Instrutor removido com sucesso" });
             }
             catch (KeyNotFoundException)

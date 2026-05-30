@@ -44,7 +44,7 @@ namespace FitManager.Business
 
         public async Task editarAsync(int id, EditarUsuarioVM vm)
         {
-            var usuario = await repositorio.getByIdAsync(id.ToString())
+            var usuario = await repositorio.getByIdAsync(id)
                 ?? throw new KeyNotFoundException("Usuario nao encontrado");
 
             if (vm.nomeCompleto != null) usuario.nomeCompleto = vm.nomeCompleto;
@@ -53,7 +53,7 @@ namespace FitManager.Business
             if (vm.email != null) usuario.email = vm.email;
             if (vm.telefone != null) usuario.telefone = vm.telefone;
 
-            await repositorio.updateAsync(id.ToString(), usuario);
+            await repositorio.updateAsync(id, usuario);
         }
 
         public async Task<ListagemResponseVM<UsuarioResponseVM>> listarPorCargoAsync(
