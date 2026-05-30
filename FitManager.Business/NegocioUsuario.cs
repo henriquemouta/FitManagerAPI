@@ -53,6 +53,8 @@ namespace FitManager.Business
             if (vm.email != null) usuario.email = vm.email;
             if (vm.telefone != null) usuario.telefone = vm.telefone;
 
+            usuario.updateAt = DateTime.UtcNow;
+
             await repositorio.updateAsync(id.ToString(), usuario);
         }
 
