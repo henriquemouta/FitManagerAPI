@@ -14,10 +14,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         )
     ));
 
-// Repositórios
+// Repositï¿½rios
 builder.Services.AddScoped<RepositorioUsuario>();
 
-// Negócios
+// Negï¿½cios
 builder.Services.AddScoped<NegocioUsuario>();
 
 builder.Services.AddControllers();
@@ -36,7 +36,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// Após builder.Build()
+// Apï¿½s builder.Build()
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
