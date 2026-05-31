@@ -10,9 +10,30 @@ namespace FitManagerAPI.Controllers
     public class InstrutorController : ControllerBase
     {
         private readonly NegocioUsuario negocio;
+        private readonly NegocioTreino negocioTreino;
         private const int CARGO_INSTRUTOR = 2;
 
-        public InstrutorController(NegocioUsuario negocio) { this.negocio = negocio; }
+        public InstrutorController(NegocioUsuario negocio, NegocioTreino negocioTreino) { this.negocio = negocio; this.negocioTreino = negocioTreino; }
+
+        [HttpGet("{instrutorId}/alunos")]
+        public async Task<IActionResult> getAlunos(int instrutorId)
+        {
+            var alunos = await negocioTreino.getAlunosByInstrutorAsync(instrutorId);
+            return Ok(new { items = alunos });
+        }
+
+        [HttpGet("{instrutorId}/treinos")]
+        public async Task<IActionResult> getTreinos(
+            int instrutorId,
+            [FromQuery] string? search,
+            [FromQuery] string? status,
+            [FromQuery] int? alunoId,
+            [FromQuery] int page = 1,
+            [FromQuery] int limit = 10)
+        {
+            var resultado = await negocioTreino.listarPorInstrutorAsync(instrutorId, search, status, alunoId, page, limit);
+            return Ok(resultado);
+        }
 
         [HttpGet]
         public async Task<IActionResult> listar(

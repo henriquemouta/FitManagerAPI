@@ -28,6 +28,9 @@ namespace FitManager.Models
         [Column("repeticoes")]
         public int repeticoes { get; set; }
 
+        [Column("ordem")]
+        public int ordem { get; set; } = 1;
+
         [Column("observacoes")]
         public string? observacoes { get; set; }
 

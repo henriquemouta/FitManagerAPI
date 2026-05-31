@@ -105,6 +105,7 @@ namespace FitManager.Business
                     id = s.idSessao,
                     nomeSessao = s.nomeSessao,
                     grupoMuscular = s.grupoMuscular,
+                    ordem = s.ordem,
                     totalExercicios = s.treinoExercicios.Count,
                     exercicios = s.treinoExercicios.Select(te => new
                     {
@@ -113,8 +114,9 @@ namespace FitManager.Business
                         series = te.series,
                         repeticoes = te.repeticoes.ToString(),
                         carga = $"{te.carga} kg",
-                        descansp = $"{te.tempoDescanso} s",
-                        observacoes = te.observacoes
+                        descanso = $"{te.tempoDescanso} s",
+                        observacoes = te.observacoes,
+                        ordem = te.ordem
                     })
                 })
             };
