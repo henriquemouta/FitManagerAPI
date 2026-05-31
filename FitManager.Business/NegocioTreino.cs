@@ -65,6 +65,60 @@ namespace FitManager.Business
 
         public async Task<Treino?> getCompletoAsync(int id)
             => await _repo.getCompletoAsync(id);
+        
+        public async Task<object?> getTreinoAtivoDoAlunoAsync(int alunoId)
+        {
+            var treino = await _repo.getAtivoByAlunoAsync(alunoId);
+            if (treino == null) return null;
+
+            var totalExercicios = treino.sessoes.Sum(s => s.treinoExercicios.Count);
+            var tempoEstimadoMinutos = treino.tempoEstimado.HasValue
+                ? treino.tempoEstimado.Value
+                : treino.sessoes.Count * 25;
+            
+            return new
+            {
+                treinoId = treino.idTreino,
+                nomeTreino = treino.nomeTreino,
+                status = treino.statusTreino,
+                instrutor = new
+                {
+                    id = treino.instrutor?.idUsuario,
+                    nomeCompleto = treino.instrutor?.nomeCompleto
+                },
+                tempoEstimado = $"{tempoEstimadoMinutos} minutos",
+                totalExercicios = totalExercicios,
+                observacoesGerais = treino.descricaoTreino
+            };
+        }
+
+        public async Task<object?> getSessoesDoTreinoAsync(int treinoId)
+        {
+            var treino = await _repo.getCompletoAsync(treinoId);
+            if (treino == null) return null;
+
+            return new
+            {
+                treinoId = treino.idTreino,
+                sessoes = treino.sessoes.Select(s => new
+                {
+                    id = s.idSessao,
+                    nomeSessao = s.nomeSessao,
+                    grupoMuscular = s.grupoMuscular,
+                    totalExercicios = s.treinoExercicios.Count,
+                    exercicios = s.treinoExercicios.Select(te => new
+                    {
+                        id = te.id,
+                        nomeExercicio = te.exercicio?.nomeExercicio,
+                        series = te.series,
+                        repeticoes = te.repeticoes.ToString(),
+                        carga = $"{te.carga} kg",
+                        descansp = $"{te.tempoDescanso} s",
+                        observacoes = te.observacoes
+                    })
+                })
+            };
+        }
 
         public async Task<ListagemResponseVM<object>> listarTodosAsync(string? search, string? status, int? alunoId, int? instrutorId, int page, int limit)
         {

@@ -72,6 +72,16 @@ namespace FitManagerAPI.Controllers
             });
         }
 
+        [HttpGet("{treinoId}/sessoes")]
+        public async Task<IActionResult> getSessoes(int treinoId)
+        {
+            var resultado = await _negocio.getSessoesDoTreinoAsync(treinoId);
+            if (resultado == null)
+                return NotFound (new { message = "Treino não encontrado" });
+            
+            return Ok(resultado);
+        }
+
         [HttpGet("{id}/relatorio")]
         public async Task<IActionResult> getRelatorio(int id)
         {
