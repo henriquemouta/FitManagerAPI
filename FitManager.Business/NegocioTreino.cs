@@ -65,42 +65,97 @@ namespace FitManager.Business
 
         public async Task<Treino?> getCompletoAsync(int id)
             => await _repo.getCompletoAsync(id);
+        
+        public async Task<TreinoAtivoVM?> getTreinoAtivoDoAlunoAsync(int alunoId)
+        {
+            var treino = await _repo.getAtivoByAlunoAsync(alunoId);
+            if (treino == null) return null;
 
-        public async Task<ListagemResponseVM<object>> listarTodosAsync(string? search, string? status, int? alunoId, int? instrutorId, int page, int limit)
+            var totalExercicios = treino.sessoes.Sum(s => s.treinoExercicios.Count);
+            var tempoEstimadoMinutos = treino.tempoEstimado.HasValue
+                ? treino.tempoEstimado.Value
+                : treino.sessoes.Count * 25;
+            
+            return new TreinoAtivoVM
+            {
+                treinoId = treino.idTreino,
+                nomeTreino = treino.nomeTreino,
+                status = treino.statusTreino,
+                instrutor = new PessoaResumoVM
+                {
+                    id = treino.instrutor?.idUsuario,
+                    nomeCompleto = treino.instrutor?.nomeCompleto
+                },
+                tempoEstimado = $"{tempoEstimadoMinutos} minutos",
+                totalExercicios = totalExercicios,
+                observacoesGerais = treino.descricaoTreino
+            };
+        }
+
+        public async Task<SessoesDoTreinoVM?> getSessoesDoTreinoAsync(int treinoId)
+        {
+            var treino = await _repo.getCompletoAsync(treinoId);
+            if (treino == null) return null;
+
+            return new SessoesDoTreinoVM
+            {
+                treinoId = treino.idTreino,
+                sessoes = treino.sessoes.Select(s => new SessaoCompletoVM
+                {
+                    nomeSessao = s.nomeSessao,
+                    grupoMuscular = s.grupoMuscular,
+                    ordem = s.ordem,
+                    exercicios = s.treinoExercicios.Select(te => new ExercicioCompletoVM
+                    {
+                        idExercicio = te.id,
+                        nomeExercicio = te.exercicio?.nomeExercicio,
+                        series = te.series,
+                        repeticoes = te.repeticoes,
+                        carga = te.carga,
+                        descanso = $"{te.tempoDescanso} s",
+                        observacoes = te.observacoes,
+                        ordem = te.ordem
+                    }).ToList()
+                }).ToList()
+            };
+        }
+
+        public async Task<ListagemResponseVM<TreinoItemVM>> listarTodosAsync(string? search, string? status, int? alunoId, int? instrutorId, int page, int limit)
         {
             var items = await _repo.getAllFilteredAsync(search, status, alunoId, instrutorId, page, limit);
             var total = await _repo.countAllFilteredAsync(search, status, alunoId, instrutorId);
 
-            return new ListagemResponseVM<object>
+            return new ListagemResponseVM<TreinoItemVM>
             {
                 total = total,
                 page = page,
-                items = items.Select(t => (object)new
+                items = items.Select(t => new TreinoItemVM
                 {
-                    id = t.idTreino,
+                    treinoId = t.idTreino,
                     nomeTreino = t.nomeTreino,
-                    aluno = t.usuarioTreinos.FirstOrDefault()?.aluno?.nomeCompleto ?? "",
-                    instrutor = t.instrutor?.nomeCompleto ?? "",
+                    alunoNome = t.usuarioTreinos.FirstOrDefault()?.aluno?.nomeCompleto ?? "",
+                    instrutorNome = t.instrutor?.nomeCompleto ?? "",
                     status = t.statusTreino,
                     createdAt = t.dataCriacao
                 })
             };
         }
 
-        public async Task<ListagemResponseVM<object>> listarPorInstrutorAsync(int instrutorId, string? search, string? status, int? alunoId, int page, int limit)
+        public async Task<ListagemResponseVM<TreinoItemVM>> listarPorInstrutorAsync(int instrutorId, string? search, string? status, int? alunoId, int page, int limit)
         {
             var items = await _repo.getByInstrutorAsync(instrutorId, search, status, alunoId, page, limit);
             var total = await _repo.countByInstrutorAsync(instrutorId);
 
-            return new ListagemResponseVM<object>
+            return new ListagemResponseVM<TreinoItemVM>
             {
                 total = total,
                 page = page,
-                items = items.Select(t => (object)new
+                items = items.Select(t => new TreinoItemVM
                 {
-                    id = t.idTreino,
+                    treinoId = t.idTreino,
                     nomeTreino = t.nomeTreino,
-                    aluno = t.usuarioTreinos.FirstOrDefault()?.aluno?.nomeCompleto ?? "",
+                    alunoNome = t.usuarioTreinos.FirstOrDefault()?.aluno?.nomeCompleto ?? "",
+                    instrutorNome = t.instrutor?.nomeCompleto ?? "",
                     objetivo = t.objetivo,
                     status = t.statusTreino,
                     createdAt = t.dataCriacao
@@ -108,18 +163,17 @@ namespace FitManager.Business
             };
         }
 
-        public async Task<List<object>> getAlunosByInstrutorAsync(int instrutorId)
+        public async Task<List<PessoaResumoVM>> getAlunosByInstrutorAsync(int instrutorId)
         {
             var alunos = await _repo.getAlunosByInstrutorAsync(instrutorId);
-            return alunos.Select(a => (object)new
+            return alunos.Select(a => new PessoaResumoVM
             {
                 id = a.idUsuario,
                 nomeCompleto = a.nomeCompleto,
-                matricula = a.matricula
             }).ToList();
         }
 
-        public async Task<object?> getRelatorioAsync(int id)
+        public async Task<RelatorioTreinoVM?> getRelatorioAsync(int id)
         {
             var treino = await _repo.getCompletoAsync(id);
             if (treino == null) return null;
@@ -127,12 +181,12 @@ namespace FitManager.Business
             var totalExercicios = treino.sessoes.Sum(s => s.treinoExercicios.Count);
             var tempoEstimado = treino.sessoes.Count * 30;
 
-            return new
+            return new RelatorioTreinoVM
             {
                 treinoId = treino.idTreino,
                 nomeTreino = treino.nomeTreino,
-                instrutor = treino.instrutor?.nomeCompleto ?? "",
-                aluno = treino.usuarioTreinos.FirstOrDefault()?.aluno?.nomeCompleto ?? "",
+                instrutorNome = treino.instrutor?.nomeCompleto ?? "",
+                alunoNome = treino.usuarioTreinos.FirstOrDefault()?.aluno?.nomeCompleto ?? "",
                 quantidadeSessoes = treino.sessoes.Count,
                 quantidadeExercicios = totalExercicios,
                 tempoEstimado = $"{tempoEstimado / 60}h{tempoEstimado % 60:D2}min",

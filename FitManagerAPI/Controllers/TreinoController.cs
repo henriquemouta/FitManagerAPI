@@ -58,6 +58,7 @@ namespace FitManagerAPI.Controllers
                     id = s.idSessao,
                     nomeSessao = s.nomeSessao,
                     grupoMuscular = s.grupoMuscular,
+                    ordem = s.ordem,
                     exercicios = s.treinoExercicios.Select(te => new
                     {
                         id = te.id,
@@ -66,10 +67,21 @@ namespace FitManagerAPI.Controllers
                         repeticoes = te.repeticoes,
                         carga = te.carga,
                         descanso = te.tempoDescanso,
-                        observacoes = te.observacoes
+                        observacoes = te.observacoes,
+                        ordem = te.ordem
                     })
                 })
             });
+        }
+
+        [HttpGet("{treinoId}/sessoes")]
+        public async Task<IActionResult> getSessoes(int treinoId)
+        {
+            var resultado = await _negocio.getSessoesDoTreinoAsync(treinoId);
+            if (resultado == null)
+                return NotFound (new { message = "Treino não encontrado" });
+            
+            return Ok(resultado);
         }
 
         [HttpGet("{id}/relatorio")]

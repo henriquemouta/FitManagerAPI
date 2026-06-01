@@ -7,6 +7,16 @@ namespace FitManager.Repositories
     {
         public RepositorioTreino(AppDbContext context) : base(context) { }
 
+        public async Task<Treino?> getAtivoByAlunoAsync(int alunoId)
+            => await banco
+                .Include(t => t.instrutor)
+                .Include(t => t.sessoes)
+                    .ThenInclude(s => s.treinoExercicios)
+                .Include (t => t.usuarioTreinos)
+                .FirstOrDefaultAsync(t =>
+                    t.statusTreino == "ATIVO" &&
+                    t.usuarioTreinos.Any(ut => ut.idAluno == alunoId));
+
         public async Task<List<Treino>> getByInstrutorAsync(int instrutorId, string? search, string? status, int? alunoId, int page, int limit)
         {
             var query = banco
