@@ -14,6 +14,20 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         )
     ));
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
+
+
 // Repositórios
 builder.Services.AddScoped<RepositorioUsuario>();
 builder.Services.AddScoped<RepositorioTreino>();
@@ -31,8 +45,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
-
+app.UseCors("AllowFrontend");
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
