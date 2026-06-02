@@ -39,6 +39,9 @@ namespace FitManager.Business
             return treinoExercicio;
         }
 
+        public async Task<List<TreinoExercicio>> getBySessaoAsync(int sessaoId)
+                    => await repo.getBySessaoAsync(sessaoId);
+        
         public async Task editarAsync(int id, EditarExercicioVM vm)
         {
             var te = await repo.getByIdAsync(id)
