@@ -1,9 +1,11 @@
 ﻿using FitManager.Business;
 using FitManager.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitManagerAPI.Controllers
 {
+    [Authorize(Roles = "ADMIN,INSTRUTOR")]
     [ApiController]
     [Route("api/v1/treinos")]
     public class TreinoController : ControllerBase
@@ -58,7 +60,6 @@ namespace FitManagerAPI.Controllers
                     id = s.idSessao,
                     nomeSessao = s.nomeSessao,
                     grupoMuscular = s.grupoMuscular,
-                    ordem = s.ordem,
                     exercicios = s.treinoExercicios.Select(te => new
                     {
                         id = te.id,

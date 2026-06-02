@@ -29,9 +29,9 @@ namespace FitManager.Models
         public DateOnly dataCriacao { get; set; }
 
         [Column("id_instrutor")]
-        public int idInstrutor { get; set; }
+        public int id_instrutor { get; set; }
 
-        [ForeignKey("IdInstrutor")]
+        [ForeignKey("id_instrutor")]
         public Usuario? instrutor { get; set; }
 
         public ICollection<UsuarioTreino> usuarioTreinos { get; set; } = new List<UsuarioTreino>();

@@ -16,9 +16,6 @@ namespace FitManager.Models
         [Column("grupo_muscular")]
         public string? grupoMuscular { get; set; }
 
-        [Column("ordem")]
-        public int ordem { get; set; } = 1;
-
         [Column("id_treino")]
         public int idTreino { get; set; }
 

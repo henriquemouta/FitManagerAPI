@@ -29,7 +29,7 @@ namespace FitManager.Business
                 objetivo = vm.objetivo,
                 descricaoTreino = vm.observacoesGerais,
                 statusTreino = "RASCUNHO",
-                idInstrutor = vm.instrutorId,
+                id_instrutor = vm.instrutorId,
                 dataCriacao = DateOnly.FromDateTime(DateTime.UtcNow)
             };
 
@@ -104,7 +104,6 @@ namespace FitManager.Business
                 {
                     nomeSessao = s.nomeSessao,
                     grupoMuscular = s.grupoMuscular,
-                    ordem = s.ordem,
                     exercicios = s.treinoExercicios.Select(te => new ExercicioCompletoVM
                     {
                         idExercicio = te.id,
