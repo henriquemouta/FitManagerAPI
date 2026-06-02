@@ -22,7 +22,7 @@ namespace FitManager.Repositories
             var query = banco
                 .Include(t => t.instrutor)
                 .Include(t => t.sessoes)
-                .Where(t => t.idInstrutor == instrutorId);
+                .Where(t => t.id_instrutor == instrutorId);
 
             if (!string.IsNullOrEmpty(search))
                 query = query.Where(t => t.nomeTreino.Contains(search));
@@ -56,7 +56,7 @@ namespace FitManager.Repositories
                 query = query.Where(t => t.usuarioTreinos.Any(ut => ut.idAluno == alunoId));
 
             if (instrutorId.HasValue)
-                query = query.Where(t => t.idInstrutor == instrutorId);
+                query = query.Where(t => t.id_instrutor == instrutorId);
 
             return await query
                 .Skip((page - 1) * limit)
@@ -82,7 +82,7 @@ namespace FitManager.Repositories
                 .ToListAsync();
 
         public async Task<int> countByInstrutorAsync(int instrutorId)
-            => await banco.CountAsync(t => t.idInstrutor == instrutorId);
+            => await banco.CountAsync(t => t.id_instrutor  == instrutorId);
 
         public async Task<int> countAllFilteredAsync(string? search, string? status, int? alunoId, int? instrutorId)
         {
@@ -98,7 +98,7 @@ namespace FitManager.Repositories
                 query = query.Where(t => t.usuarioTreinos.Any(ut => ut.idAluno == alunoId));
 
             if (instrutorId.HasValue)
-                query = query.Where(t => t.idInstrutor == instrutorId);
+                query = query.Where(t => t.id_instrutor == instrutorId);
 
             return await query.CountAsync();
         }

@@ -1,10 +1,12 @@
 ﻿using FitManager.Business;
 using FitManager.ViewModels;
 using FitManager.ViewModels.Admin;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitManagerAPI.Controllers
 {
+    [Authorize(Roles = "ADMIN")]
     [ApiController]
     [Route("api/v1/dashboard")]
     public class AdminController : ControllerBase

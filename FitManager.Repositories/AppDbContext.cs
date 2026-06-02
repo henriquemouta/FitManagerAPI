@@ -28,7 +28,7 @@ namespace FitManager.Repositories
             modelBuilder.Entity<Treino>()
                 .HasOne(t => t.instrutor)
                 .WithMany()
-                .HasForeignKey(t => t.idInstrutor);
+                .HasForeignKey(t => t.id_instrutor);
 
             // Relacionamento SessaoTreino -> Treino
             modelBuilder.Entity<SessaoTreino>()

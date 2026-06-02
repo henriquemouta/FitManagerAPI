@@ -17,6 +17,9 @@ namespace FitManager.Repositories
         public async Task<bool> existeMatriculaAsync(string matricula)
             => await banco.AnyAsync(u => u.matricula == matricula);
 
+        public async Task<Usuario?> getByEmailAsync(string email)
+    => await banco.FirstOrDefaultAsync(u => u.email == email);
+
         public async Task<List<Usuario>> getByCargoAsync(int idCargo, string? search, int page, int limit)
         {
             var query = banco
