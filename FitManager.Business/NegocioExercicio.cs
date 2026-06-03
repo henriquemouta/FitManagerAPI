@@ -18,7 +18,7 @@ namespace FitManager.Business
         {
             try
             {
-                
+
                 var sessao = await repo.getContext().SessoesTreino
                     .FirstOrDefaultAsync(s => s.idSessao == sessaoId)
                     ?? throw new KeyNotFoundException($"Sessao {sessaoId} nao encontrada");
@@ -77,7 +77,7 @@ namespace FitManager.Business
 
         public async Task<List<TreinoExercicio>> getBySessaoAsync(int sessaoId)
                     => await repo.getBySessaoAsync(sessaoId);
-        
+
 
     }
 }
