@@ -35,7 +35,7 @@ namespace FitManager.Business
                 var treinoExercicio = new TreinoExercicio
                 {
                     idSessao = sessaoId,
-                    idExercicio = exercicio.idExercicio,
+                    idExercicio = vm.idExercicio,
                     series = vm.series,
                     repeticoes = vm.repeticoes,
                     carga = vm.carga,
@@ -49,7 +49,7 @@ namespace FitManager.Business
             catch (KeyNotFoundException) { throw; }
             catch (Exception ex)
             {
-                throw new ApplicationException($"Erro ao criar exercicio: {ex.Message}", ex);
+                throw new ApplicationException($"Erro ao criar exercício: {ex.Message}", ex);
             }
         }
 

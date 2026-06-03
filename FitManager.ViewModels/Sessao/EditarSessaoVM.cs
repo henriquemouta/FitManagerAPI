@@ -11,6 +11,5 @@ namespace FitManager.ViewModels
     {
         public string? nomeSessao { get; set; }
         public string? grupoMuscular { get; set; }
-        public int? ordem { get; set; }
     }
 }

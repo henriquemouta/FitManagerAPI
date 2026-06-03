@@ -8,10 +8,9 @@ namespace FitManager.ViewModels
 {
     public class SessaoCompletoVM
     {
-        public int idExercicio { get; set; }
+        public int idSessao { get; set; }
         public string nomeSessao { get; set; } = string.Empty;
         public string? grupoMuscular { get; set; } = string.Empty;
-        public int ordem { get; set; }
         public List<ExercicioCompletoVM> exercicios { get; set; } = new List<ExercicioCompletoVM>();
     }
 }

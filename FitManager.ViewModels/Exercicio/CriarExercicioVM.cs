@@ -8,7 +8,7 @@ namespace FitManager.ViewModels
 {
     public class CriarExercicioVM
     {
-        public string nomeExercicio { get; set; } = string.Empty;
+        public int idExercicio { get; set; }
         public int series { get; set; }
         public int repeticoes { get; set; }
         public decimal carga { get; set; }

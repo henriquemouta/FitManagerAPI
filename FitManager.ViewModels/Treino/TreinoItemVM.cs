@@ -10,8 +10,8 @@ namespace FitManager.ViewModels
     {
         public int treinoId { get; set; }
         public string nomeTreino { get; set; } = string.Empty;
-        public string alunoNome { get; set; } = string.Empty;
-        public string instrutorNome { get; set; } = string.Empty;
+        public string aluno { get; set; } = string.Empty;
+        public string instrutor { get; set; } = string.Empty;
         public string? objetivo { get; set; } = string.Empty;
         public string status { get; set; } = string.Empty;
         public DateOnly createdAt { get; set; }

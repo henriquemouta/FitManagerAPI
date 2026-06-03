@@ -19,26 +19,26 @@ namespace FitManager.Models
         [Column("senha")]
         public string senha { get; set; } = string.Empty;
 
-        [Column("telefone")]
-        public string? telefone { get; set; }
-
         [Column("data_nascimento")]
         public DateOnly dataNascimento { get; set; }
 
         [Column("matricula")]
         public string matricula { get; set; } = string.Empty;
 
-        [Column("cpf")]
-        public string cpf { get; set; } = string.Empty;
-
         [Column("create_at")]
         public DateTime createAt { get; set; } = DateTime.UtcNow;
 
-        [Column("update_at")]
-        public DateTime? updateAt { get; set; }
-
         [Column("id_cargo")]
         public int idCargo { get; set; }
+
+        [Column("cpf")]
+        public string cpf { get; set; } = string.Empty;
+
+        [Column("telefone")]
+        public string? telefone { get; set; }
+
+        [Column("update_at")]
+        public DateTime? updateAt { get; set; }
 
         [ForeignKey("idCargo")]
         public Cargo? cargo { get; set; }

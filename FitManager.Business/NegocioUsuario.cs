@@ -16,7 +16,19 @@ namespace FitManager.Business
 
         public async Task<UsuarioResponseVM> cadastrarAsync(CadastroUsuarioVM vm)
         {
-            try
+            if (await repositorio.existeCpfAsync(vm.cpf))
+                throw new InvalidOperationException("CPF ja cadastrado");
+
+            if (await repositorio.existeEmailAsync(vm.email))
+                throw new InvalidOperationException("Email ja cadastrado");
+
+            if (await repositorio.existeMatriculaAsync(vm.matricula))
+                throw new InvalidOperationException("Matricula ja cadastrada");
+
+            if(await repositorio.existeCargoAsync(vm.idCargo) == false)
+                throw new InvalidOperationException("Cargo nao encontrado");
+
+            var usuario = new Usuario
             {
                 if (await repositorio.existeCpfAsync(vm.cpf))
                     throw new InvalidOperationException("CPF ja cadastrado");
