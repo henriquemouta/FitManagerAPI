@@ -15,28 +15,27 @@ namespace FitManager.Business
 
         public async Task<TreinoExercicio> criarAsync(int sessaoId, CriarExercicioVM vm)
         {
-            var exercicio = new Exercicio
+            try
             {
-                nomeExercicio = vm.nomeExercicio,
-                observacoes = vm.observacoes
-            };
 
-            await repo.getContext().Exercicios.AddAsync(exercicio);
-            await repo.getContext().SaveChangesAsync();
+                var treinoExercicio = new TreinoExercicio
+                {
+                    idSessao = sessaoId,
+                    idExercicio = vm.idExercicio,
+                    series = vm.series,
+                    repeticoes = vm.repeticoes,
+                    carga = vm.carga,
+                    tempoDescanso = vm.descanso,
+                    observacoes = vm.observacoes
+                };
 
-            var treinoExercicio = new TreinoExercicio
+                await repo.addAsync(treinoExercicio);
+                return treinoExercicio;
+            }
+            catch (Exception ex)
             {
-                idSessao = sessaoId,
-                idExercicio = exercicio.idExercicio,
-                series = vm.series,
-                repeticoes = vm.repeticoes,
-                carga = vm.carga,
-                tempoDescanso = vm.descanso,
-                observacoes = vm.observacoes
-            };
-
-            await repo.addAsync(treinoExercicio);
-            return treinoExercicio;
+                throw new ApplicationException($"Erro ao criar exercício: {ex.Message}", ex);
+            }
         }
 
         public async Task editarAsync(int id, EditarExercicioVM vm)

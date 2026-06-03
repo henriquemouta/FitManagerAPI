@@ -101,20 +101,19 @@ namespace FitManager.Business
             {
                 treinoId = treino.idTreino,
                 sessoes = treino.sessoes.Select(s => new SessaoCompletoVM
-                {
+                {   
+                    idSessao = s.idSessao,
                     nomeSessao = s.nomeSessao,
                     grupoMuscular = s.grupoMuscular,
-                    ordem = s.ordem,
                     exercicios = s.treinoExercicios.Select(te => new ExercicioCompletoVM
                     {
-                        idExercicio = te.id,
+                        idExercicio = te.idExercicio,
                         nomeExercicio = te.exercicio?.nomeExercicio,
                         series = te.series,
                         repeticoes = te.repeticoes,
                         carga = te.carga,
-                        descanso = $"{te.tempoDescanso} s",
+                        descanso = te.tempoDescanso,
                         observacoes = te.observacoes,
-                        ordem = te.ordem
                     }).ToList()
                 }).ToList()
             };
@@ -133,8 +132,8 @@ namespace FitManager.Business
                 {
                     treinoId = t.idTreino,
                     nomeTreino = t.nomeTreino,
-                    alunoNome = t.usuarioTreinos.FirstOrDefault()?.aluno?.nomeCompleto ?? "",
-                    instrutorNome = t.instrutor?.nomeCompleto ?? "",
+                    aluno = t.usuarioTreinos.FirstOrDefault()?.aluno?.nomeCompleto ?? "",
+                    instrutor = t.instrutor?.nomeCompleto ?? "",
                     status = t.statusTreino,
                     createdAt = t.dataCriacao
                 })
@@ -154,8 +153,8 @@ namespace FitManager.Business
                 {
                     treinoId = t.idTreino,
                     nomeTreino = t.nomeTreino,
-                    alunoNome = t.usuarioTreinos.FirstOrDefault()?.aluno?.nomeCompleto ?? "",
-                    instrutorNome = t.instrutor?.nomeCompleto ?? "",
+                    aluno = t.usuarioTreinos.FirstOrDefault()?.aluno?.nomeCompleto ?? "",
+                    instrutor = t.instrutor?.nomeCompleto ?? "",
                     objetivo = t.objetivo,
                     status = t.statusTreino,
                     createdAt = t.dataCriacao
@@ -185,8 +184,8 @@ namespace FitManager.Business
             {
                 treinoId = treino.idTreino,
                 nomeTreino = treino.nomeTreino,
-                instrutorNome = treino.instrutor?.nomeCompleto ?? "",
-                alunoNome = treino.usuarioTreinos.FirstOrDefault()?.aluno?.nomeCompleto ?? "",
+                instrutor = treino.instrutor?.nomeCompleto ?? "",
+                aluno = treino.usuarioTreinos.FirstOrDefault()?.aluno?.nomeCompleto ?? "",
                 quantidadeSessoes = treino.sessoes.Count,
                 quantidadeExercicios = totalExercicios,
                 tempoEstimado = $"{tempoEstimado / 60}h{tempoEstimado % 60:D2}min",
