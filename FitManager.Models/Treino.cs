@@ -8,7 +8,7 @@ namespace FitManager.Models
     {
         [Key]
         [Column("id_treino")]
-        public int idTreino { get; set; }
+        public int id_treino { get; set; }
 
         [Column("nome_treino")]
         public string nomeTreino { get; set; } = string.Empty;

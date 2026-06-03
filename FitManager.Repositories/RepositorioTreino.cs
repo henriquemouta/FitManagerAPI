@@ -72,7 +72,7 @@ namespace FitManager.Repositories
                         .ThenInclude(te => te.exercicio)
                 .Include(t => t.usuarioTreinos)
                     .ThenInclude(ut => ut.aluno)
-                .FirstOrDefaultAsync(t => t.idTreino == id);
+                .FirstOrDefaultAsync(t => t.id_treino == id);
 
         public async Task<List<Usuario>> getAlunosByInstrutorAsync(int instrutorId)
             => await _context.UsuarioTreinos

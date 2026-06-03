@@ -40,7 +40,7 @@ namespace FitManagerAPI.Controllers
 
             return Ok(new
             {
-                id = treino.idTreino,
+                id = treino.id_treino,
                 nome = treino.nomeTreino,
                 objetivo = treino.objetivo,
                 observacoesGerais = treino.descricaoTreino,
@@ -102,7 +102,7 @@ namespace FitManagerAPI.Controllers
                 return StatusCode(201, new
                 {
                     message = "Treino criado com sucesso",
-                    treino = new { id = treino.idTreino, status = treino.statusTreino }
+                    treino = new { id = treino.id_treino, status = treino.statusTreino }
                 });
             }
             catch (KeyNotFoundException ex)
