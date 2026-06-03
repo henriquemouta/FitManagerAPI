@@ -68,7 +68,7 @@ namespace FitManagerAPI.Controllers
                         repeticoes = te.repeticoes,
                         carga = te.carga,
                         descanso = te.tempoDescanso,
-                        observacoes = te.observacoes,
+                        observacoes = te.observacoes
                     })
                 })
             });

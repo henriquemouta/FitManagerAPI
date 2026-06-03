@@ -17,19 +17,11 @@ namespace FitManager.Business
         {
             try
             {
-                var exercicio = new Exercicio
-                {
-                    nomeExercicio = vm.nomeExercicio,
-                    observacoes = vm.observacoes
-                };
-
-                await repo.getContext().Exercicios.AddAsync(exercicio);
-                await repo.getContext().SaveChangesAsync();
 
                 var treinoExercicio = new TreinoExercicio
                 {
                     idSessao = sessaoId,
-                    idExercicio = exercicio.idExercicio,
+                    idExercicio = vm.idExercicio,
                     series = vm.series,
                     repeticoes = vm.repeticoes,
                     carga = vm.carga,
@@ -42,7 +34,7 @@ namespace FitManager.Business
             }
             catch (Exception ex)
             {
-                throw new ApplicationException($"Erro ao criar exercicio: {ex.Message}", ex);
+                throw new ApplicationException($"Erro ao criar exercício: {ex.Message}", ex);
             }
         }
 

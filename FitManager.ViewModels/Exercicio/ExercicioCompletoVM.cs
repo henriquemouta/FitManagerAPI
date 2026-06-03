@@ -13,8 +13,7 @@ namespace FitManager.ViewModels
         public int? series { get; set; }
         public int repeticoes { get; set; }
         public decimal carga { get; set; }
-        public string? descanso { get; set; }
+        public int descanso { get; set; }
         public string? observacoes { get; set; }
-        public int ordem { get; set; }
     }
 }
