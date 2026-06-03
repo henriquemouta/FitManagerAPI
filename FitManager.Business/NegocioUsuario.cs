@@ -88,7 +88,7 @@ namespace FitManager.Business
         }
 
         public async Task<int> contarPorCargoAsync(int idCargo)
-            => await repositorio.countByCargoAsync(idCargo, null);
+            => await repositorio.countByCargoAsync(idCargo, null);  
 
         public async Task<List<UsuarioResponseVM>> listarRecentesAsync(int idCargo, int limit)
         {
