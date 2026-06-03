@@ -34,7 +34,7 @@ namespace FitManager.Models
         [ForeignKey("IdSessao")]
         public SessaoTreino? sessaoTreino { get; set; }
 
-        [ForeignKey("IdExercicio")]
+      
         public Exercicio? exercicio { get; set; }
     }
 }

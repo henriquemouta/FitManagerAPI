@@ -40,16 +40,29 @@ namespace FitManager.Business
 
         public async Task editarAsync(int id, EditarExercicioVM vm)
         {
-            var te = await repo.getByIdAsync(id)
-                ?? throw new KeyNotFoundException("Exercicio nao encontrado");
+            try
+            {
+                var te = await repo.getByIdAsync(id)
+                    ?? throw new KeyNotFoundException("Exercicio nao encontrado");
 
-            if (vm.series.HasValue) te.series = vm.series.Value;
-            if (vm.repeticoes.HasValue) te.repeticoes = vm.repeticoes.Value;
-            if (vm.carga.HasValue) te.carga = vm.carga.Value;
-            if (vm.descanso.HasValue) te.tempoDescanso = vm.descanso.Value;
-            if (vm.observacoes != null) te.observacoes = vm.observacoes;
+                if (vm.series.HasValue) te.series = vm.series.Value;
+                if (vm.repeticoes.HasValue) te.repeticoes = vm.repeticoes.Value;
+                if (vm.carga.HasValue) te.carga = vm.carga.Value;
+                if (vm.descanso.HasValue) te.tempoDescanso = vm.descanso.Value;
+                if (vm.observacoes != null) te.observacoes = vm.observacoes;
 
-            await repo.updateAsync(id, te);
+                await repo.updateAsync(id, te);
+            }
+            catch (KeyNotFoundException) { throw; }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Erro ao editar exercicio: {ex.Message}", ex);
+            }
         }
+
+        public async Task<List<TreinoExercicio>> getBySessaoAsync(int sessaoId)
+                    => await repo.getBySessaoAsync(sessaoId);
+        
+
     }
 }

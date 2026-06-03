@@ -17,50 +17,66 @@ namespace FitManager.Business
 
         public async Task<Treino> criarAsync(CriarTreinoVM vm)
         {
-            var aluno = await _repoUsuario.getByIdAsync(vm.alunoId)
-                ?? throw new KeyNotFoundException("Usuario nao encontrado");
-
-            var instrutor = await _repoUsuario.getByIdAsync(vm.instrutorId)
-                ?? throw new KeyNotFoundException("Usuario nao encontrado");
-
-            var treino = new Treino
+            try
             {
-                nomeTreino = vm.nome,
-                objetivo = vm.objetivo,
-                descricaoTreino = vm.observacoesGerais,
-                statusTreino = "RASCUNHO",
-                idInstrutor = vm.instrutorId,
-                dataCriacao = DateOnly.FromDateTime(DateTime.UtcNow)
-            };
+                var aluno = await _repoUsuario.getByIdAsync(vm.alunoId)
+                    ?? throw new KeyNotFoundException("Aluno nao encontrado");
 
-            await _repo.addAsync(treino);
+                var instrutor = await _repoUsuario.getByIdAsync(vm.instrutorId)
+                    ?? throw new KeyNotFoundException("Instrutor nao encontrado");
 
-            var usuarioTreino = new UsuarioTreino
+                var treino = new Treino
+                {
+                    nomeTreino = vm.nome,
+                    objetivo = vm.objetivo,
+                    descricaoTreino = vm.observacoesGerais,
+                    statusTreino = "RASCUNHO",
+                    id_instrutor = vm.instrutorId,
+                    dataCriacao = DateOnly.FromDateTime(DateTime.UtcNow)
+                };
+
+                await _repo.addAsync(treino);
+
+                var usuarioTreino = new UsuarioTreino
+                {
+                    idTreino = treino.id_treino,
+                    idAluno = vm.alunoId,
+                    idInstrutor = vm.instrutorId,
+                    status = "ATIVO",
+                    dataAssociacao = DateOnly.FromDateTime(DateTime.UtcNow)
+                };
+
+                await _repo.getContext().UsuarioTreinos.AddAsync(usuarioTreino);
+                await _repo.getContext().SaveChangesAsync();
+
+                return treino;
+            }
+            catch (KeyNotFoundException) { throw; }
+            catch (Exception ex)
             {
-                idTreino = treino.idTreino,
-                idAluno = vm.alunoId,
-                idInstrutor = vm.instrutorId,
-                status = "ATIVO",
-                dataAssociacao = DateOnly.FromDateTime(DateTime.UtcNow)
-            };
-
-            await _repo.getContext().UsuarioTreinos.AddAsync(usuarioTreino);
-            await _repo.getContext().SaveChangesAsync();
-
-            return treino;
+                throw new ApplicationException($"Erro ao criar treino: {ex.Message}", ex);
+            }
         }
 
         public async Task editarAsync(int id, EditarTreinoVM vm)
         {
-            var treino = await _repo.getByIdAsync(id)
-                ?? throw new KeyNotFoundException("Treino nao encontrado");
+            try
+            {
+                var treino = await _repo.getByIdAsync(id)
+                    ?? throw new KeyNotFoundException("Treino nao encontrado");
 
-            if (vm.nome != null) treino.nomeTreino = vm.nome;
-            if (vm.objetivo != null) treino.objetivo = vm.objetivo;
-            if (vm.observacoesGerais != null) treino.descricaoTreino = vm.observacoesGerais;
-            if (vm.status != null) treino.statusTreino = vm.status;
+                if (vm.nome != null) treino.nomeTreino = vm.nome;
+                if (vm.objetivo != null) treino.objetivo = vm.objetivo;
+                if (vm.observacoesGerais != null) treino.descricaoTreino = vm.observacoesGerais;
+                if (vm.status != null) treino.statusTreino = vm.status;
 
-            await _repo.updateAsync(id, treino);
+                await _repo.updateAsync(id, treino);
+            }
+            catch (KeyNotFoundException) { throw; }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Erro ao editar treino: {ex.Message}", ex);
+            }
         }
 
         public async Task<Treino?> getCompletoAsync(int id)
@@ -78,7 +94,7 @@ namespace FitManager.Business
             
             return new TreinoAtivoVM
             {
-                treinoId = treino.idTreino,
+                treinoId = treino.id_treino,
                 nomeTreino = treino.nomeTreino,
                 status = treino.statusTreino,
                 instrutor = new PessoaResumoVM
@@ -99,7 +115,7 @@ namespace FitManager.Business
 
             return new SessoesDoTreinoVM
             {
-                treinoId = treino.idTreino,
+                treinoId = treino.id_treino,
                 sessoes = treino.sessoes.Select(s => new SessaoCompletoVM
                 {   
                     idSessao = s.idSessao,
@@ -130,7 +146,7 @@ namespace FitManager.Business
                 page = page,
                 items = items.Select(t => new TreinoItemVM
                 {
-                    treinoId = t.idTreino,
+                    treinoId = t.id_treino,
                     nomeTreino = t.nomeTreino,
                     aluno = t.usuarioTreinos.FirstOrDefault()?.aluno?.nomeCompleto ?? "",
                     instrutor = t.instrutor?.nomeCompleto ?? "",
@@ -151,7 +167,7 @@ namespace FitManager.Business
                 page = page,
                 items = items.Select(t => new TreinoItemVM
                 {
-                    treinoId = t.idTreino,
+                    treinoId = t.id_treino,
                     nomeTreino = t.nomeTreino,
                     aluno = t.usuarioTreinos.FirstOrDefault()?.aluno?.nomeCompleto ?? "",
                     instrutor = t.instrutor?.nomeCompleto ?? "",
@@ -182,7 +198,7 @@ namespace FitManager.Business
 
             return new RelatorioTreinoVM
             {
-                treinoId = treino.idTreino,
+                treinoId = treino.id_treino,
                 nomeTreino = treino.nomeTreino,
                 instrutor = treino.instrutor?.nomeCompleto ?? "",
                 aluno = treino.usuarioTreinos.FirstOrDefault()?.aluno?.nomeCompleto ?? "",

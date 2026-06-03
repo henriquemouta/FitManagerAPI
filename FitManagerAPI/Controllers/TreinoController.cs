@@ -1,9 +1,11 @@
 ﻿using FitManager.Business;
 using FitManager.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitManagerAPI.Controllers
 {
+    [Authorize(Roles = "ADMIN,INSTRUTOR")]
     [ApiController]
     [Route("api/v1/treinos")]
     public class TreinoController : ControllerBase
@@ -38,7 +40,7 @@ namespace FitManagerAPI.Controllers
 
             return Ok(new
             {
-                id = treino.idTreino,
+                id = treino.id_treino,
                 nome = treino.nomeTreino,
                 objetivo = treino.objetivo,
                 observacoesGerais = treino.descricaoTreino,
@@ -99,7 +101,7 @@ namespace FitManagerAPI.Controllers
                 return StatusCode(201, new
                 {
                     message = "Treino criado com sucesso",
-                    treino = new { id = treino.idTreino, status = treino.statusTreino }
+                    treino = new { id = treino.id_treino, status = treino.statusTreino }
                 });
             }
             catch (KeyNotFoundException ex)

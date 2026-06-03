@@ -8,7 +8,7 @@ namespace FitManager.Models
     {
         [Key]
         [Column("id_treino")]
-        public int idTreino { get; set; }
+        public int id_treino { get; set; }
 
         [Column("nome_treino")]
         public string nomeTreino { get; set; } = string.Empty;
@@ -29,9 +29,9 @@ namespace FitManager.Models
         public DateOnly dataCriacao { get; set; }
 
         [Column("id_instrutor")]
-        public int idInstrutor { get; set; }
+        public int id_instrutor { get; set; }
 
-        [ForeignKey("IdInstrutor")]
+  
         public Usuario? instrutor { get; set; }
 
         public ICollection<UsuarioTreino> usuarioTreinos { get; set; } = new List<UsuarioTreino>();

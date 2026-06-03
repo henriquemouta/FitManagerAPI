@@ -1,10 +1,12 @@
 ﻿using FitManager.Business;
 using FitManager.ViewModels;
 using FitManager.ViewModels.Usuario;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitManagerAPI.Controllers
 {
+    [Authorize(Roles = "ADMIN")]
     [ApiController]
     [Route("api/v1/alunos")]
     public class AlunoController : ControllerBase
