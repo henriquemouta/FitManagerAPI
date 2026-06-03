@@ -1,6 +1,7 @@
 ﻿using FitManager.Models;
 using FitManager.Repositories;
 using FitManager.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitManager.Business
 {
@@ -17,6 +18,19 @@ namespace FitManager.Business
         {
             try
             {
+                
+                var sessao = await repo.getContext().SessoesTreino
+                    .FirstOrDefaultAsync(s => s.idSessao == sessaoId)
+                    ?? throw new KeyNotFoundException($"Sessao {sessaoId} nao encontrada");
+
+                var exercicio = new Exercicio
+                {
+                    nomeExercicio = vm.nomeExercicio,
+                    observacoes = vm.observacoes
+                };
+
+                await repo.getContext().Exercicios.AddAsync(exercicio);
+                await repo.getContext().SaveChangesAsync();
 
                 var treinoExercicio = new TreinoExercicio
                 {
@@ -32,6 +46,7 @@ namespace FitManager.Business
                 await repo.addAsync(treinoExercicio);
                 return treinoExercicio;
             }
+            catch (KeyNotFoundException) { throw; }
             catch (Exception ex)
             {
                 throw new ApplicationException($"Erro ao criar exercício: {ex.Message}", ex);

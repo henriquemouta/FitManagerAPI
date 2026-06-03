@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FitManagerAPI.Controllers
 {
+    #if !DEBUG
     [ApiController]
+#endif
     [Route("api/v1/sessoes")]
     public class SessaoController : ControllerBase
     {
