@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FitManagerAPI.Controllers
 {
+    #if !DEBUG
     [Authorize(Roles = "ADMIN,INSTRUTOR")]
+#endif
     [ApiController]
     [Route("api/v1/treinos")]
     public class TreinoController : ControllerBase

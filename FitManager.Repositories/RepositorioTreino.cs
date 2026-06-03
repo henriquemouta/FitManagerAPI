@@ -14,7 +14,6 @@ namespace FitManager.Repositories
                     .ThenInclude(s => s.treinoExercicios)
                 .Include (t => t.usuarioTreinos)
                 .FirstOrDefaultAsync(t =>
-                    t.statusTreino == "ATIVO" &&
                     t.usuarioTreinos.Any(ut => ut.idAluno == alunoId));
 
         public async Task<List<Treino>> getByInstrutorAsync(int instrutorId, string? search, string? status, int? alunoId, int page, int limit)
