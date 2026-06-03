@@ -16,46 +16,61 @@ namespace FitManager.Business
 
         public async Task<UsuarioResponseVM> cadastrarAsync(CadastroUsuarioVM vm)
         {
-            if (await repositorio.existeCpfAsync(vm.cpf))
-                throw new InvalidOperationException("CPF ja cadastrado");
-
-            if (await repositorio.existeEmailAsync(vm.email))
-                throw new InvalidOperationException("Email ja cadastrado");
-
-            if (await repositorio.existeMatriculaAsync(vm.matricula))
-                throw new InvalidOperationException("Matricula ja cadastrada");
-
-            var usuario = new Usuario
+            try
             {
-                nomeCompleto = vm.nomeCompleto,
-                cpf = vm.cpf,
-                dataNascimento = vm.dataNascimento,
-                email = vm.email,
-                telefone = vm.telefone,
-                matricula = vm.matricula,
-                idCargo = vm.idCargo,
-                senha = BCrypt.Net.BCrypt.HashPassword(vm.senha),
-                createAt = DateTime.UtcNow
-            };
+                if (await repositorio.existeCpfAsync(vm.cpf))
+                    throw new InvalidOperationException("CPF ja cadastrado");
 
-            await repositorio.addAsync(usuario);
-            return toResponseVM(usuario);
+                if (await repositorio.existeEmailAsync(vm.email))
+                    throw new InvalidOperationException("Email ja cadastrado");
+
+                if (await repositorio.existeMatriculaAsync(vm.matricula))
+                    throw new InvalidOperationException("Matricula ja cadastrada");
+
+                var usuario = new Usuario
+                {
+                    nomeCompleto = vm.nomeCompleto,
+                    cpf = vm.cpf,
+                    dataNascimento = vm.dataNascimento,
+                    email = vm.email,
+                    telefone = vm.telefone,
+                    matricula = vm.matricula,
+                    idCargo = vm.idCargo,
+                    senha = BCrypt.Net.BCrypt.HashPassword(vm.senha),
+                    createAt = DateTime.UtcNow
+                };
+
+                await repositorio.addAsync(usuario);
+                return toResponseVM(usuario);
+            }
+            catch (InvalidOperationException) { throw; }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Erro ao cadastrar usuario: {ex.Message}", ex);
+            }
         }
 
         public async Task editarAsync(int id, EditarUsuarioVM vm)
         {
-            var usuario = await repositorio.getByIdAsync(id)
-                ?? throw new KeyNotFoundException("Usuario nao encontrado");
+            try
+            {
+                var usuario = await repositorio.getByIdAsync(id)
+                    ?? throw new KeyNotFoundException("Usuario nao encontrado");
 
-            if (vm.nomeCompleto != null) usuario.nomeCompleto = vm.nomeCompleto;
-            if (vm.cpf != null) usuario.cpf = vm.cpf;
-            if (vm.dataNascimento != null) usuario.dataNascimento = vm.dataNascimento.Value;
-            if (vm.email != null) usuario.email = vm.email;
-            if (vm.telefone != null) usuario.telefone = vm.telefone;
+                if (vm.nomeCompleto != null) usuario.nomeCompleto = vm.nomeCompleto;
+                if (vm.cpf != null) usuario.cpf = vm.cpf;
+                if (vm.dataNascimento != null) usuario.dataNascimento = vm.dataNascimento.Value;
+                if (vm.email != null) usuario.email = vm.email;
+                if (vm.telefone != null) usuario.telefone = vm.telefone;
+                usuario.updateAt = DateTime.UtcNow;
 
-            usuario.updateAt = DateTime.UtcNow;
-
-            await repositorio.updateAsync(id, usuario);
+                await repositorio.updateAsync(id, usuario);
+            }
+            catch (KeyNotFoundException) { throw; }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Erro ao editar usuario: {ex.Message}", ex);
+            }
         }
 
         public async Task<ListagemResponseVM<UsuarioResponseVM>> listarPorCargoAsync(
@@ -73,7 +88,7 @@ namespace FitManager.Business
         }
 
         public async Task<int> contarPorCargoAsync(int idCargo)
-            => await repositorio.countByCargoAsync(idCargo, null);
+            => await repositorio.countByCargoAsync(idCargo, null);  
 
         public async Task<List<UsuarioResponseVM>> listarRecentesAsync(int idCargo, int limit)
         {

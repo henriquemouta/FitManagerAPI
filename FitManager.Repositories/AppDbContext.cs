@@ -49,20 +49,31 @@ namespace FitManager.Repositories
                 .HasForeignKey(te => te.idExercicio);
 
             // Relacionamentos UsuarioTreino
-            modelBuilder.Entity<UsuarioTreino>()
-                .HasOne(ut => ut.treino)
-                .WithMany()
-                .HasForeignKey(ut => ut.idTreino);
+            modelBuilder.Entity<UsuarioTreino>(entity =>
+            {
+                entity.ToTable("usuario_treino");
+                entity.HasKey(ut => ut.idTreinoAssociacao);
 
-            modelBuilder.Entity<UsuarioTreino>()
-                .HasOne(ut => ut.aluno)
-                .WithMany()
-                .HasForeignKey(ut => ut.idAluno);
+                entity.Property(ut => ut.idTreino).HasColumnName("id_treino");
+                entity.Property(ut => ut.idAluno).HasColumnName("id_aluno");
+                entity.Property(ut => ut.idInstrutor).HasColumnName("id_instrutor");
+                entity.Property(ut => ut.status).HasColumnName("status");
+                entity.Property(ut => ut.dataAssociacao).HasColumnName("data_associacao");
 
-            modelBuilder.Entity<UsuarioTreino>()
-                .HasOne(ut => ut.instrutor)
-                .WithMany()
-                .HasForeignKey(ut => ut.idInstrutor);
+                entity.HasOne(ut => ut.treino)
+                    .WithMany(t => t.usuarioTreinos)
+                    .HasForeignKey(ut => ut.idTreino);
+
+                entity.HasOne(ut => ut.aluno)
+                    .WithMany()
+                    .HasForeignKey(ut => ut.idAluno)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(ut => ut.instrutor)
+                    .WithMany()
+                    .HasForeignKey(ut => ut.idInstrutor)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
         }
     }
 }
