@@ -129,7 +129,6 @@ namespace FitManager.Business
                         carga = te.carga,
                         descanso = $"{te.tempoDescanso} s",
                         observacoes = te.observacoes,
-                        ordem = te.ordem
                     }).ToList()
                 }).ToList()
             };
