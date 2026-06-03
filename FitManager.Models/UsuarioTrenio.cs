@@ -25,13 +25,13 @@ namespace FitManager.Models
         [Column("data_associacao")]
         public DateOnly dataAssociacao { get; set; }
 
-        [ForeignKey("IdInstrutor")]
+        [ForeignKey("id_instrutor")]
         public Usuario? instrutor { get; set; }
 
-        [ForeignKey("IdAluno")]
+        [ForeignKey("id_aluno")]
         public Usuario? aluno { get; set; }
 
-        [ForeignKey("IdTreino")]
+        [ForeignKey("id_treino")]
         public Treino? treino { get; set; }
     }
 }
