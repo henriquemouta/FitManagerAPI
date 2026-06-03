@@ -69,7 +69,6 @@ namespace FitManagerAPI.Controllers
                         carga = te.carga,
                         descanso = te.tempoDescanso,
                         observacoes = te.observacoes,
-                        ordem = te.ordem
                     })
                 })
             });

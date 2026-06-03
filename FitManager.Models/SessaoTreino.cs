@@ -19,7 +19,6 @@ namespace FitManager.Models
         [Column("id_treino")]
         public int idTreino { get; set; }
 
-        [ForeignKey("idTreino")]
         public Treino? treino { get; set; }
 
         public ICollection<TreinoExercicio> treinoExercicios { get; set; } = new List<TreinoExercicio>();

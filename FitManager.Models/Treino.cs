@@ -31,7 +31,7 @@ namespace FitManager.Models
         [Column("id_instrutor")]
         public int id_instrutor { get; set; }
 
-        [ForeignKey("id_instrutor")]
+  
         public Usuario? instrutor { get; set; }
 
         public ICollection<UsuarioTreino> usuarioTreinos { get; set; } = new List<UsuarioTreino>();
