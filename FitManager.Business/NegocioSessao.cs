@@ -19,8 +19,7 @@ namespace FitManager.Business
             {
                 idTreino = treinoId,
                 nomeSessao = vm.nomeSessao,
-                grupoMuscular = vm.grupoMuscular,
-                ordem = vm.ordem
+                grupoMuscular = vm.grupoMuscular
             };
 
             await _repo.addAsync(sessao);
@@ -34,7 +33,6 @@ namespace FitManager.Business
 
             if (vm.nomeSessao != null) sessao.nomeSessao = vm.nomeSessao;
             if (vm.grupoMuscular != null) sessao.grupoMuscular = vm.grupoMuscular;
-            if (vm.ordem.HasValue) sessao.ordem = vm.ordem.Value;
             await _repo.updateAsync(id, sessao);
         }
     }

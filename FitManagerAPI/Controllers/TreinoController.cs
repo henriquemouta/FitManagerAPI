@@ -58,7 +58,6 @@ namespace FitManagerAPI.Controllers
                     id = s.idSessao,
                     nomeSessao = s.nomeSessao,
                     grupoMuscular = s.grupoMuscular,
-                    ordem = s.ordem,
                     exercicios = s.treinoExercicios.Select(te => new
                     {
                         id = te.id,
@@ -67,8 +66,7 @@ namespace FitManagerAPI.Controllers
                         repeticoes = te.repeticoes,
                         carga = te.carga,
                         descanso = te.tempoDescanso,
-                        observacoes = te.observacoes,
-                        ordem = te.ordem
+                        observacoes = te.observacoes
                     })
                 })
             });

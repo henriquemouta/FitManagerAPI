@@ -25,6 +25,9 @@ namespace FitManager.Business
             if (await repositorio.existeMatriculaAsync(vm.matricula))
                 throw new InvalidOperationException("Matricula ja cadastrada");
 
+            if(await repositorio.existeCargoAsync(vm.idCargo) == false)
+                throw new InvalidOperationException("Cargo nao encontrado");
+
             var usuario = new Usuario
             {
                 nomeCompleto = vm.nomeCompleto,
