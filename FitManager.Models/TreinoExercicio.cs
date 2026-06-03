@@ -25,14 +25,11 @@ namespace FitManager.Models
         [Column("tempo_descanso")]
         public int tempoDescanso { get; set; }
 
-        [Column("repeticoes")]
-        public int repeticoes { get; set; }
-
-        [Column("ordem")]
-        public int ordem { get; set; } = 1;
-
         [Column("observacoes")]
         public string? observacoes { get; set; }
+
+        [Column("repeticoes")]
+        public int repeticoes { get; set; }
 
         [ForeignKey("IdSessao")]
         public SessaoTreino? sessaoTreino { get; set; }
