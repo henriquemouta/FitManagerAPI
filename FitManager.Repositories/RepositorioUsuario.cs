@@ -17,8 +17,9 @@ namespace FitManager.Repositories
         public async Task<bool> existeMatriculaAsync(string matricula)
             => await banco.AnyAsync(u => u.matricula == matricula);
 
-        public async Task<bool> existeCargoAsync(int idCargo)
-            => await banco.AnyAsync(u => u.idCargo == idCargo);
+        public async Task<Usuario?> getByEmailAsync(string email)
+    => await banco.FirstOrDefaultAsync(u => u.email == email);
+
         public async Task<List<Usuario>> getByCargoAsync(int idCargo, string? search, int page, int limit)
         {
             var query = banco
@@ -36,7 +37,7 @@ namespace FitManager.Repositories
                 .ToListAsync();
         }
 
-        public async Task<int> countByCargoAsync(int idCargo, string? search) 
+        public async Task<int> countByCargoAsync(int idCargo, string? search)
         {
             var query = banco.Where(u => u.idCargo == idCargo);
 
@@ -49,7 +50,7 @@ namespace FitManager.Repositories
         }
 
         public async Task<Usuario?> getByCargoAndIdAsync(int id, int idCargo)
-        
+
             => await banco
                 .Include(u => u.cargo)
                 .FirstOrDefaultAsync(u => u.idUsuario == id && u.idCargo == idCargo);

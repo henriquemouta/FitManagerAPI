@@ -81,7 +81,7 @@ namespace FitManager.Business
 
         public async Task<Treino?> getCompletoAsync(int id)
             => await _repo.getCompletoAsync(id);
-        
+
         public async Task<TreinoAtivoVM?> getTreinoAtivoDoAlunoAsync(int alunoId)
         {
             var treino = await _repo.getAtivoByAlunoAsync(alunoId);
@@ -91,7 +91,7 @@ namespace FitManager.Business
             var tempoEstimadoMinutos = treino.tempoEstimado.HasValue
                 ? treino.tempoEstimado.Value
                 : treino.sessoes.Count * 25;
-            
+
             return new TreinoAtivoVM
             {
                 treinoId = treino.id_treino,
@@ -117,7 +117,7 @@ namespace FitManager.Business
             {
                 treinoId = treino.id_treino,
                 sessoes = treino.sessoes.Select(s => new SessaoCompletoVM
-                {   
+                {
                     idSessao = s.idSessao,
                     nomeSessao = s.nomeSessao,
                     grupoMuscular = s.grupoMuscular,
