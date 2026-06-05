@@ -17,15 +17,11 @@ namespace FitManagerAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> login([FromBody] LoginVM vm)
         {
-            try
-            {
-                var resultado = await _negocio.loginAsync(vm);
-                return Ok(resultado);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized(new { message = ex.Message });
-            }
+
+            var resultado = await _negocio.loginAsync(vm);
+            
+            
+            return Ok(resultado);
         }
     }
 }

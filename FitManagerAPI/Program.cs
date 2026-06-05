@@ -1,5 +1,6 @@
 using FitManager.Business;
 using FitManager.Repositories;
+using FitManagerAPI.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -33,7 +34,22 @@ builder.Services.AddCors(options =>
 
 
 // JWT
-var jwtKey = builder.Configuration["Jwt:Key"]!;
+var jwtKey = builder.Configuration["Jwt:Key"];
+var jwtIssuer = builder.Configuration["Jwt:Issuer"];
+var jwtAudience = builder.Configuration["Jwt:Audience"];
+
+if (string.IsNullOrWhiteSpace(jwtKey))
+    throw new InvalidOperationException(
+        "Configuração Jwt:Key não encontrada.");
+
+if (string.IsNullOrWhiteSpace(jwtIssuer))
+    throw new InvalidOperationException(
+        "Configuração Jwt:Issuer não encontrada.");
+
+if (string.IsNullOrWhiteSpace(jwtAudience))
+    throw new InvalidOperationException(
+        "Configuração Jwt:Audience não encontrada.");
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -43,8 +59,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
+            
+            ValidIssuer = jwtIssuer,
+            ValidAudience = jwtAudience,
+            
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(jwtKey))
         };
@@ -106,6 +124,7 @@ app.UseSwaggerUI(c =>
 });
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
