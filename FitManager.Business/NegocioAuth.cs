@@ -21,12 +21,15 @@ namespace FitManager.Business
 
         public async Task<object> loginAsync(LoginVM vm)
         {
+
+            if (vm == null)
+                throw new ArgumentNullException(nameof(vm), "Dados de login não podem ser nulos.");
+            
             var usuario = await _repo.getByEmailAsync(vm.email) 
                 ?? throw new UnauthorizedAccessException("Email ou senha invalidos");
 
             var senhaValida = BCrypt.Net.BCrypt.Verify(vm.senha, usuario.senha);
 
-        
             if (!senhaValida)
                 throw new UnauthorizedAccessException("Email ou senha invalidos");
 
@@ -51,10 +54,35 @@ namespace FitManager.Business
 
         private string gerarToken(int id, string email, string perfil)
         {
-            var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
+            var key = _config["Jwt:Key"];
+            var issuer = _config["Jwt:Issuer"];
+            var audience = _config["Jwt:Audience"];
+            var expiresInHours = _config["Jwt:ExpiresInHours"];
+            
+            if (string.IsNullOrWhiteSpace(key))
+                throw new InvalidOperationException(
+                    "Configuração Jwt:Key não encontrada.");
 
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            if (string.IsNullOrWhiteSpace(issuer))
+                throw new InvalidOperationException(
+                    "Configuração Jwt:Issuer não encontrada.");
+
+            if (string.IsNullOrWhiteSpace(audience))
+                throw new InvalidOperationException(
+                    "Configuração Jwt:Audience não encontrada.");
+
+            if (string.IsNullOrWhiteSpace(expiresInHours))
+                throw new InvalidOperationException(
+                    "Configuração Jwt:ExpiresInHours não encontrada.");
+
+            if (!double.TryParse(expiresInHours, out var horas))
+                throw new InvalidOperationException(
+                    "Jwt:ExpiresInHours possui valor inválido.");
+
+            var securityKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(key));
+
+            var creds = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
             {
@@ -64,11 +92,10 @@ namespace FitManager.Business
             };
 
             var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Audience"],
+                issuer: issuer,
+                audience: audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(
-                    double.Parse(_config["Jwt:ExpiresInHours"]!)),
+                expires: DateTime.UtcNow.AddHours(horas),
                 signingCredentials: creds
             );
 
