@@ -16,6 +16,12 @@ namespace FitManager.Repositories
         public DbSet<TreinoExercicio> TreinoExercicios { get; set; }
         public DbSet<UsuarioTreino> UsuarioTreinos { get; set; }
 
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Relacionamento Usuario -> Cargo
@@ -80,6 +86,8 @@ namespace FitManager.Repositories
                     .WithMany()
                     .HasForeignKey(te => te.idExercicio);
             });
+
+
 
             // Relacionamento TreinoExercicio -> Exercicio
             modelBuilder.Entity<TreinoExercicio>()
