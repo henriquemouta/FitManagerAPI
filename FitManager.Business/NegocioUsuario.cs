@@ -37,7 +37,7 @@ namespace FitManager.Business
                     matricula = vm.matricula,
                     idCargo = vm.idCargo,
                     senha = BCrypt.Net.BCrypt.HashPassword(vm.senha),
-                    createAt = DateTime.UtcNow
+                    createAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc)
                 };
 
                 await repositorio.addAsync(usuario);
@@ -62,8 +62,7 @@ namespace FitManager.Business
                 if (vm.dataNascimento != null) usuario.dataNascimento = vm.dataNascimento.Value;
                 if (vm.email != null) usuario.email = vm.email;
                 if (vm.telefone != null) usuario.telefone = vm.telefone;
-                usuario.updateAt = DateTime.UtcNow;
-
+                usuario.updateAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
                 await repositorio.updateAsync(id, usuario);
             }
             catch (KeyNotFoundException) { throw; }
