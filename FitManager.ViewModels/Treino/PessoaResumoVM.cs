@@ -10,5 +10,6 @@ namespace FitManager.ViewModels
     {
         public int? id { get; set; }
         public string? nomeCompleto { get; set; } = string.Empty;
+        public string matricula { get; set; } = string.Empty;
     }
 }

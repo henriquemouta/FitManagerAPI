@@ -21,6 +21,8 @@ namespace FitManager.Repositories
             var query = banco
                 .Include(t => t.instrutor)
                 .Include(t => t.sessoes)
+                .Include(t => t.usuarioTreinos)
+                    .ThenInclude(ut => ut.aluno)
                 .Where(t => t.id_instrutor == instrutorId);
 
             if (!string.IsNullOrEmpty(search))

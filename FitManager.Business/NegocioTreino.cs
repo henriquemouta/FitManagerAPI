@@ -169,6 +169,7 @@ namespace FitManager.Business
                 {
                     treinoId = t.id_treino,
                     nomeTreino = t.nomeTreino,
+                    alunoId = t.usuarioTreinos.FirstOrDefault()?.idAluno,
                     aluno = t.usuarioTreinos.FirstOrDefault()?.aluno?.nomeCompleto ?? "",
                     instrutor = t.instrutor?.nomeCompleto ?? "",
                     objetivo = t.objetivo,
@@ -185,6 +186,7 @@ namespace FitManager.Business
             {
                 id = a.idUsuario,
                 nomeCompleto = a.nomeCompleto,
+                matricula = a.matricula,
             }).ToList();
         }
 

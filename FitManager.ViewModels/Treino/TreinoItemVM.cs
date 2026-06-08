@@ -10,6 +10,7 @@ namespace FitManager.ViewModels
     {
         public int treinoId { get; set; }
         public string nomeTreino { get; set; } = string.Empty;
+        public int? alunoId { get; set; }
         public string aluno { get; set; } = string.Empty;
         public string instrutor { get; set; } = string.Empty;
         public string? objetivo { get; set; } = string.Empty;
