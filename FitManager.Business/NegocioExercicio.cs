@@ -14,6 +14,7 @@ namespace FitManager.Business
             this.repo = repo;
         }
 
+
         public async Task<TreinoExercicio> criarAsync(int sessaoId, CriarExercicioVM vm)
         {
             try
@@ -22,6 +23,15 @@ namespace FitManager.Business
                 var sessao = await repo.getContext().SessoesTreino
                     .FirstOrDefaultAsync(s => s.idSessao == sessaoId)
                     ?? throw new KeyNotFoundException($"Sessao {sessaoId} nao encontrada");
+
+                var exercicio = new Exercicio
+                {
+                    nomeExercicio = vm.nomeExercicio,
+                    observacoes = vm.observacoes
+                };
+
+                await repo.getContext().Exercicios.AddAsync(exercicio);
+                await repo.getContext().SaveChangesAsync();
 
                 var treinoExercicio = new TreinoExercicio
                 {
