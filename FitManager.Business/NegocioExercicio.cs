@@ -23,15 +23,6 @@ namespace FitManager.Business
                     .FirstOrDefaultAsync(s => s.idSessao == sessaoId)
                     ?? throw new KeyNotFoundException($"Sessao {sessaoId} nao encontrada");
 
-                var exercicio = new Exercicio
-                {
-                    nomeExercicio = vm.nomeExercicio,
-                    observacoes = vm.observacoes
-                };
-
-                await repo.getContext().Exercicios.AddAsync(exercicio);
-                await repo.getContext().SaveChangesAsync();
-
                 var treinoExercicio = new TreinoExercicio
                 {
                     idSessao = sessaoId,
