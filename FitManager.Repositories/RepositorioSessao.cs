@@ -13,8 +13,8 @@ namespace FitManager.Repositories
                     .ThenInclude(te => te.exercicio)
                 .Where(s => s.idTreino == treinoId)
                 .ToListAsync();
-        
+
         public async Task<bool> treinoExisteAsync(int treinoId)
-            => await banco.AnyAsync(s => s.idTreino == treinoId);
+        => await _context.Treinos.AnyAsync(t => t.id_treino == treinoId);
     }
 }
