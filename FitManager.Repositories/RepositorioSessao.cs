@@ -15,6 +15,6 @@ namespace FitManager.Repositories
                 .ToListAsync();
 
         public async Task<bool> treinoExisteAsync(int treinoId)
-        => await _context.Treinos.AnyAsync(t => t.id_treino == treinoId);
+          => await _context.Treinos.AnyAsync(t => t.id_treino == treinoId);
     }
 }
