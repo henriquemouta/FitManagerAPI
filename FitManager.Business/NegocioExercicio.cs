@@ -35,7 +35,7 @@ namespace FitManager.Business
                 var treinoExercicio = new TreinoExercicio
                 {
                     idSessao = sessaoId,
-                    idExercicio = vm.idExercicio,
+                    idExercicio = exercicio.idExercicio,
                     series = vm.series,
                     repeticoes = vm.repeticoes,
                     carga = vm.carga,

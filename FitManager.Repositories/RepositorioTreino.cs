@@ -65,7 +65,6 @@ namespace FitManager.Repositories
 
         public async Task<Treino?> getCompletoAsync(int id)
             => await banco
-       
          .Include(t => t.instrutor)
                 .Include(t => t.sessoes)
                     .ThenInclude(s => s.treinoExercicios)
