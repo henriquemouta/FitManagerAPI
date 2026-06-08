@@ -143,12 +143,23 @@ namespace FitManagerAPI.Controllers
         [HttpPost("{treinoId}/sessoes")]
         public async Task<IActionResult> criarSessao(int treinoId, [FromBody] CriarSessaoVM vm)
         {
-            var sessao = await _negocioSessao.criarAsync(treinoId, vm);
+            try
+            {
+                var sessao = await _negocioSessao.criarAsync(treinoId, vm);
             return StatusCode(201, new
             {
                 message = "Sessao criada com sucesso",
                 sessao = new { id = sessao.idSessao }
             });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500,new { message = ex.Message });
+            }
         }
     }
 }

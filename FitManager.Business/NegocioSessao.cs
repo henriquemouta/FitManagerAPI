@@ -15,6 +15,9 @@ namespace FitManager.Business
 
         public async Task<SessaoTreino> criarAsync(int treinoId, CriarSessaoVM vm)
         {
+            var existe = await _repo.treinoExisteAsync(treinoId);
+            if (!existe) throw new KeyNotFoundException("Treino nao encontrado");
+
             var sessao = new SessaoTreino
             {
                 idTreino = treinoId,
