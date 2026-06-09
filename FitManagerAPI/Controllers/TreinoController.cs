@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FitManagerAPI.Controllers
 {
-    #if !DEBUG
-    [Authorize(Roles = "ADMIN,INSTRUTOR")]
+#if !DEBUG
+    [Authorize(Roles = "ADMIN,INSTRUTOR,ALUNO")]
 #endif
     [ApiController]
     [Route("api/v1/treinos")]
