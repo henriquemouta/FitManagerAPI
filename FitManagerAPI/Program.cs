@@ -19,17 +19,22 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         )
     ));
 
+// Adiciona antes do builder.Services.AddControllers()
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:5173")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
+    options.AddPolicy("FitManagerPolicy", policy =>
+    {
+        policy
+            .WithOrigins(
+                "https://fitmanager-clwb.vercel.app",
+                "http://localhost:3000",
+                "http://localhost:5173"
+            )
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+    });
 });
-
 
 
 
@@ -116,7 +121,7 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 app.UseSwagger();
-app.UseCors("AllowFrontend");
+app.UseCors("FitManagerPolicy");
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "FitManager API v1");
